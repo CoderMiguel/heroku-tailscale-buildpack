@@ -8,20 +8,20 @@ if [ -z "$TAILSCALE_AUTH_KEY" ]; then
 fi
 
 wait_for_tailscale_running() {
-    timeout=5     # Timeout in seconds
-    interval=0.5  # Interval between checks
-    elapsed=0
+  timeout=5     # Timeout in seconds
+  interval=0.5  # Interval between checks
+  elapsed=0
 
-    while [ "$elapsed" -lt "$timeout" ]; do
-        state=$(tailscale status -json | jq -r .BackendState)
-        if [ "$state" = "Running" ]; then            
-            return 0
-        fi
-        sleep "$interval"
-        elapsed=$(echo "$elapsed + $interval" | bc)
-    done
-    
-    return 1
+  while [ "$elapsed" -lt "$timeout" ]; do
+    state=$(tailscale status -json | jq -r .BackendState)
+    if [ "$state" = "Running" ]; then
+      return 0
+    fi
+    sleep "$interval"
+    elapsed=$(echo "$elapsed + $interval" | bc)
+  done
+
+  return 1
 }
 
 if [ -z "$TAILSCALE_HOSTNAME" ]; then
@@ -39,7 +39,7 @@ else
   TAILSCALE_HOSTNAME="$TAILSCALE_HOSTNAME"
 fi
 tailscaled -cleanup > /dev/null 2>&1
-(tailscaled -verbose ${TAILSCALED_VERBOSE:--1} --tun=userspace-networking --socks5-server=localhost:1055 > /dev/null 2>&1 &)  
+(tailscaled -verbose ${TAILSCALED_VERBOSE:--1} --tun=userspace-networking --socks5-server=localhost:1055 > /dev/null 2>&1 &)
 tailscale up \
   --authkey="${TAILSCALE_AUTH_KEY}?preauthorized=true&ephemeral=true" \
   --hostname="$TAILSCALE_HOSTNAME" \
