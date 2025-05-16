@@ -8,7 +8,7 @@ if [ -z "$TAILSCALE_AUTH_KEY" ]; then
 fi
 
 wait_for_tailscale_running() {
-  timeout=5     # Timeout in seconds
+  timeout=${TAILSCALE_RUNNING_TIMEOUT:-5} # Timeout in seconds
   interval=0.5  # Interval between checks
 
   # convert to milliseconds so we can use integer math
