@@ -10,15 +10,20 @@ fi
 wait_for_tailscale_running() {
   timeout=5     # Timeout in seconds
   interval=0.5  # Interval between checks
+
+  # convert to milliseconds so we can use integer math
+  timeout_ms=$(awk "BEGIN {print $timeout * 1000}")
+  interval_ms=$(awk "BEGIN {print $interval * 1000}")
+
   elapsed=0
 
-  while [ "$elapsed" -lt "$timeout" ]; do
+  while [ "$elapsed" -lt "$timeout_ms" ]; do
     state=$(tailscale status -json | jq -r .BackendState)
     if [ "$state" = "Running" ]; then
       return 0
     fi
     sleep "$interval"
-    elapsed=$(echo "$elapsed + $interval" | bc)
+    elapsed=$((elapsed + interval_ms))
   done
 
   return 1
