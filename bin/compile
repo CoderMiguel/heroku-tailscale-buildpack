@@ -43,6 +43,8 @@ PROXYCHAINS_VERSION=${PROXYCHAINS_VERSION:-4.17}
 PROXYCHAINS_SOURCE_URL="https://github.com/rofl0r/proxychains-ng/archive/refs/tags/v$PROXYCHAINS_VERSION.tar.gz"
 PROXYCHAINS_INSTALL_DIR="$BUILD_DIR/vendor/proxychains-ng"
 
+# TODO: a new version of Tailscale is available check.
+
 log "Installing Tailscale $TAILSCALE_VERSION"
 mkdir -p $TAILSCALE_INSTALL_DIR
 export PATH="$TAILSCALE_INSTALL_DIR:$PATH"
