@@ -17,28 +17,16 @@ function indent() {
 }
 
 function tailscale_latest_release_json() {
-  local latest_release
-  curl -s https://api.github.com/repos/tailscale/tailscale/releases/latest
+   if [ -z "$LATEST_RELEASE_JSON" ]; then
+      LATEST_RELEASE_JSON=$(curl -s https://api.github.com/repos/tailscale/tailscale/releases/latest)
+    fi
+    echo "$LATEST_RELEASE_JSON"
 }
 
 function tailscale_latest_version() {
   local version=$(jq -r '.tag_name' <<< "$(tailscale_latest_release_json)")
   echo "${version#v}" # remove leading 'v'
 }
-
-#function tailscale_version() {
-#    local json=$(tailscale version --json $1)
-#    echo "$(jq -r '.upstream' <<< "$json")"
-#}
-
-#  current=$(jq -r '.short' <<< "$json")
-#  upstream=$(jq -r '.upstream' <<< "$json")
-#
-##  echo "current: $current, upstream: $upstream"
-#  if [[ "$current" == "$upstream" ]]; then
-#    echo "Tailscale is up to date"
-#  else
-#    echo "Tailscale will be updated: $current => $upstream"
 
 # setup variables
 BUILD_DIR=$1
@@ -47,7 +35,7 @@ ENV_DIR=$3
 BUILDPACK_DIR="$(dirname "$(dirname "$0")")"
 
 TAILSCALE_VERSION=${TAILSCALE_VERSION:-$(tailscale_latest_version)}
-TAILSCALE_BUILD_ARCH=${TAILSCALE_BUILD_ARCH:-amd64}
+TAILSCALE_BUILD_ARCH=${TAILSCALE_BUILD_ARCH:-arch}
 TAILSCALE_SOURCE_URL="https://pkgs.tailscale.com/stable/tailscale_${TAILSCALE_VERSION}_${TAILSCALE_BUILD_ARCH}.tgz"
 TAILSCALE_INSTALL_DIR="$BUILD_DIR/vendor/tailscale"
 
