@@ -46,12 +46,10 @@ fi
 tailscaled -cleanup > /dev/null 2>&1
 (tailscaled -verbose ${TAILSCALED_VERBOSE:--1} --tun=userspace-networking --socks5-server=localhost:1055 > /dev/null 2>&1 &)
 tailscale up \
-  --authkey="${TAILSCALE_AUTH_KEY}?preauthorized=true&ephemeral=true" \
+  --authkey="${TAILSCALE_AUTH_KEY}" \
   --hostname="$TAILSCALE_HOSTNAME" \
   --advertise-tags=${TAILSCALE_ADVERTISE_TAGS:-} \
-  --accept-routes \
-  --timeout=15s \
-  ${TAILSCALE_ADDITIONAL_ARGS:---timeout=15s}
+  ${TAILSCALE_ADDITIONAL_ARGS:---accept-routes --timeout=15s}
 
 export ALL_PROXY=socks5://localhost:1055/
 
