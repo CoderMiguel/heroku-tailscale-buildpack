@@ -35,7 +35,7 @@ ENV_DIR=$3
 BUILDPACK_DIR="$(dirname "$(dirname "$0")")"
 
 TAILSCALE_VERSION=${TAILSCALE_VERSION:-$(tailscale_latest_version)}
-TAILSCALE_BUILD_ARCH=${TAILSCALE_BUILD_ARCH:-arch}
+TAILSCALE_BUILD_ARCH=${TAILSCALE_BUILD_ARCH:-$(arch)}
 TAILSCALE_SOURCE_URL="https://pkgs.tailscale.com/stable/tailscale_${TAILSCALE_VERSION}_${TAILSCALE_BUILD_ARCH}.tgz"
 TAILSCALE_INSTALL_DIR="$BUILD_DIR/vendor/tailscale"
 
