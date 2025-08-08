@@ -35,7 +35,7 @@ ENV_DIR=$3
 BUILDPACK_DIR="$(dirname "$(dirname "$0")")"
 
 TAILSCALE_VERSION=${TAILSCALE_VERSION:-$(tailscale_latest_version)}
-TAILSCALE_BUILD_ARCH=${TAILSCALE_BUILD_ARCH:-$(arch)}
+TAILSCALE_BUILD_ARCH=amd64
 TAILSCALE_SOURCE_URL="https://pkgs.tailscale.com/stable/tailscale_${TAILSCALE_VERSION}_${TAILSCALE_BUILD_ARCH}.tgz"
 TAILSCALE_INSTALL_DIR="$BUILD_DIR/vendor/tailscale"
 
@@ -43,7 +43,7 @@ PROXYCHAINS_VERSION=${PROXYCHAINS_VERSION:-4.17}
 PROXYCHAINS_SOURCE_URL="https://github.com/rofl0r/proxychains-ng/archive/refs/tags/v$PROXYCHAINS_VERSION.tar.gz"
 PROXYCHAINS_INSTALL_DIR="$BUILD_DIR/vendor/proxychains-ng"
 
-log "Installing Tailscale $TAILSCALE_VERSION ($TAILSCALE_BUILD_ARCH)"
+log "Installing Tailscale $TAILSCALE_VERSION"
 mkdir -p $TAILSCALE_INSTALL_DIR
 export PATH="$TAILSCALE_INSTALL_DIR:$PATH"
 curl -sL $TAILSCALE_SOURCE_URL \
