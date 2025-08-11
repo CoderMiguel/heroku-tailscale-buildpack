@@ -34,8 +34,6 @@ CACHE_DIR=$2
 ENV_DIR=$3
 BUILDPACK_DIR="$(dirname "$(dirname "$0")")"
 
-HEROKU_APP_NAME=${HEROKU_APP_NAME:-$APP_NAME}
-
 TAILSCALE_VERSION=${TAILSCALE_VERSION:-$(tailscale_latest_version)}
 TAILSCALE_BUILD_ARCH=amd64
 TAILSCALE_SOURCE_URL="https://pkgs.tailscale.com/stable/tailscale_${TAILSCALE_VERSION}_${TAILSCALE_BUILD_ARCH}.tgz"

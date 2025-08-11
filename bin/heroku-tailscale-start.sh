@@ -30,6 +30,8 @@ wait_for_tailscale_running() {
 }
 
 if [ -z "$TAILSCALE_HOSTNAME" ]; then
+  HEROKU_APP_NAME=${HEROKU_APP_NAME:-$APP_NAME}
+
   if [ -z "$HEROKU_APP_NAME" ]; then
     TAILSCALE_HOSTNAME=$(hostname)
   else
