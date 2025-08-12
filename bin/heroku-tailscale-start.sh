@@ -58,7 +58,7 @@ tailscale up \
   ${TAILSCALE_ADDITIONAL_ARGS:---accept-routes --timeout=15s}
 
 export ALL_PROXY=socks5://localhost:1055/
-export HTTP_PROXY=http://localhost:1055/
+#export HTTP_PROXY=http://localhost:1055/
 #export http_proxy=http://localhost:1055/ ./my-app
 
 if wait_for_tailscale_running; then
