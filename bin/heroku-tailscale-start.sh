@@ -63,7 +63,7 @@ tailscale up \
 
 if wait_for_tailscale_running; then
   echo "[tailscale]: Connected to tailnet as hostname=$TAILSCALE_HOSTNAME; SOCKS5 proxy available at localhost:1055"
-  tailscale serve --bg 3000
+  tailscale serve --bg $PORT
 #  echo "[tailscale]: Status = > $(tailscale status | grep tagged-devices)"
 else
   echo "[tailscale]: Warning - Backend did not reach 'Running' state within timeout"
