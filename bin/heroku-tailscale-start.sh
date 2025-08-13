@@ -19,7 +19,7 @@ wait_for_tailscale_running() {
 
   while [ "$elapsed" -lt "$timeout_ms" ]; do
     state=$(tailscale status -json | jq -r .BackendState)
-    echo "[tailscale]: ($elapsed < $timeout_ms) Current backend state: $state"
+#    echo "[tailscale]: ($elapsed < $timeout_ms) Current backend state: $state"
     if [ "$state" = "Running" ]; then
       return 0
     fi
@@ -63,7 +63,8 @@ tailscale up \
 
 if wait_for_tailscale_running; then
   echo "[tailscale]: Connected to tailnet as hostname=$TAILSCALE_HOSTNAME; SOCKS5 proxy available at localhost:1055"
-  echo "[tailscale]: Status = > $(tailscale status)"
+  tailscale serve --bg 3000
+#  echo "[tailscale]: Status = > $(tailscale status | grep tagged-devices)"
 else
   echo "[tailscale]: Warning - Backend did not reach 'Running' state within timeout"
 fi
