@@ -84,15 +84,15 @@ mkdir -p $BUILD_DIR/bin
 cp "$BUILDPACK_DIR/bin/tailscale_proxy" $BUILD_DIR/bin/
 chmod +x $BUILD_DIR/bin/tailscale_proxy
 
-if [ -f "$BUILD_DIR/bin/rails" ]; then
-  log "Rails app detected: Will replace bin/rails, bin/bundle, and bin/rake with passthrough scripts to tailscale_proxy"
-  mv $BUILD_DIR/bin/rails $BUILD_DIR/bin/rails_original
-  cp "$BUILDPACK_DIR/bin/rails/rails" $BUILD_DIR/bin/
-  chmod +x $BUILD_DIR/bin/rails
-  mv $BUILD_DIR/bin/bundle $BUILD_DIR/bin/bundle_original
-  cp "$BUILDPACK_DIR/bin/rails/bundle" $BUILD_DIR/bin/
-  chmod +x $BUILD_DIR/bin/bundle
-  mv $BUILD_DIR/bin/rake $BUILD_DIR/bin/rake_original
-  cp "$BUILDPACK_DIR/bin/rails/rake" $BUILD_DIR/bin/
-  chmod +x $BUILD_DIR/bin/rake
-fi
+#if [ -f "$BUILD_DIR/bin/rails" ]; then
+#  log "Rails app detected: Will replace bin/rails, bin/bundle, and bin/rake with passthrough scripts to tailscale_proxy"
+#  mv $BUILD_DIR/bin/rails $BUILD_DIR/bin/rails_original
+#  cp "$BUILDPACK_DIR/bin/rails/rails" $BUILD_DIR/bin/
+#  chmod +x $BUILD_DIR/bin/rails
+#  mv $BUILD_DIR/bin/bundle $BUILD_DIR/bin/bundle_original
+#  cp "$BUILDPACK_DIR/bin/rails/bundle" $BUILD_DIR/bin/
+#  chmod +x $BUILD_DIR/bin/bundle
+#  mv $BUILD_DIR/bin/rake $BUILD_DIR/bin/rake_original
+#  cp "$BUILDPACK_DIR/bin/rails/rake" $BUILD_DIR/bin/
+#  chmod +x $BUILD_DIR/bin/rake
+#fi

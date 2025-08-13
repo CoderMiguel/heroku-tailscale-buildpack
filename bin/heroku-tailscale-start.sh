@@ -57,7 +57,7 @@ tailscale up \
   --advertise-tags=${TAILSCALE_ADVERTISE_TAGS:-} \
   ${TAILSCALE_ADDITIONAL_ARGS:---accept-routes --timeout=15s}
 
-export ALL_PROXY=socks5://localhost:1055/
+#export ALL_PROXY=socks5://localhost:1055/
 #export HTTP_PROXY=http://localhost:1055/
 #export http_proxy=http://localhost:1055/ ./my-app
 
