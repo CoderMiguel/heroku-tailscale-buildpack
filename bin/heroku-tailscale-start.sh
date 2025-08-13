@@ -47,9 +47,8 @@ else
 fi
 tailscaled -cleanup > /dev/null 2>&1
 
-(tailscaled -verbose ${TAILSCALED_VERBOSE:--1}
-            --tun=userspace-networking
-            --outbound-http-proxy-listen=localhost:1055
+(tailscaled -verbose ${TAILSCALED_VERBOSE:--1} \
+            --tun=userspace-networking \
             --socks5-server=localhost:1055 > /dev/null 2>&1 &)
 tailscale up \
   --authkey="${TAILSCALE_AUTH_KEY}" \
@@ -63,6 +62,7 @@ tailscale up \
 
 if wait_for_tailscale_running; then
   echo "[tailscale]: Connected to tailnet as hostname=$TAILSCALE_HOSTNAME; SOCKS5 proxy available at localhost:1055"
+  echo "[tailscale]: Status = > $(tailscale status)"
 else
   echo "[tailscale]: Warning - Backend did not reach 'Running' state within timeout"
 fi
