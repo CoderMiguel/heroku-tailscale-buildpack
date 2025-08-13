@@ -19,6 +19,7 @@ wait_for_tailscale_running() {
 
   while [ "$elapsed" -lt "$timeout_ms" ]; do
     state=$(tailscale status -json | jq -r .BackendState)
+    echo "[tailscale]: ($elapsed < $timeout_ms) Current backend state: $state"
     if [ "$state" = "Running" ]; then
       return 0
     fi
