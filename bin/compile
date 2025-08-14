@@ -35,10 +35,10 @@ curl -sL $TAILSCALE_SOURCE_URL \
   | tar -zxf - -C "$TAILSCALE_INSTALL_DIR" --strip=1 tailscale_${TAILSCALE_VERSION}_${TAILSCALE_BUILD_ARCH}/tailscaled tailscale_${TAILSCALE_VERSION}_${TAILSCALE_BUILD_ARCH}/tailscale
 chmod +x "$TAILSCALE_INSTALL_DIR/tailscale"
 chmod +x "$TAILSCALE_INSTALL_DIR/tailscaled"
-for file in tailscale_daemon tailscale_latest_release tailscale_status; do
-  cp "$BUILDPACK_DIR/bin/$file" "$TAILSCALE_INSTALL_DIR/$file"
-done
-#cp "$BUILDPACK_DIR/bin"/{tailscale_daemon,tailscale_latest_release,tailscale_status} "$TAILSCALE_INSTALL_DIR/{tailscale_daemon,tailscale_latest_release,tailscale_status}"
+#for file in tailscale_daemon tailscale_latest_release tailscale_status; do
+#  cp "$BUILDPACK_DIR/bin/$file" "$TAILSCALE_INSTALL_DIR/$file"
+#done
+cp -r "$BUILDPACK_DIR/bin/buildpack_helpers" "$TAILSCALE_INSTALL_DIR/buildpack_helpers"
 cp "$BUILDPACK_DIR/bin/heroku-tailscale-start.sh" "$TAILSCALE_INSTALL_DIR/heroku-tailscale-start.sh"
 cp "$BUILDPACK_DIR/bin/heroku-tailscale-test.sh" "$TAILSCALE_INSTALL_DIR/heroku-tailscale-test.sh"
 chmod +x "$TAILSCALE_INSTALL_DIR/heroku-tailscale-start.sh"

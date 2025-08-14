@@ -1,10 +1,5 @@
 #!/usr/bin/env bash
 
-. ./bin/tailscale_daemon
-. ./bin/tailscale_latest_release
-. ./bin/tailscale_status
-
-
 if [ -z "$TAILSCALE_HOSTNAME" ]; then
   HEROKU_APP_NAME=${HEROKU_APP_NAME:-${APP_NAME:-$(hostname)}}
   # Swap the . and _ in the dyno with a - since tailscale doesn't allow for periods.
@@ -16,33 +11,10 @@ if [ -z "$TAILSCALE_HOSTNAME" ]; then
 #  echo "Using Tailscale hostname: $TAILSCALE_HOSTNAME"
 fi
 
-function connect_to_tailnet() {
-  tailscale up \
-    --authkey="${TAILSCALE_AUTH_KEY}" \
-    --hostname="$TAILSCALE_HOSTNAME" \
-    --advertise-tags=${TAILSCALE_ADVERTISE_TAGS:-} \
-    ${TAILSCALE_ADDITIONAL_ARGS:---accept-routes --timeout=15s}
-
-#  if ! tailscale_running; then
-#    tailscale_log "Tailscale daemon is not running. Starting it now..."
-#    start_tailscale_daemon
-#  fi
-#
-#  # Check if Tailscale is already connected
-#  if tailscale status | grep -q "Logged in"; then
-#    tailscale_log "Tailscale is already connected."
-#    return 0
-#  fi
-#
-#  # Connect to Tailscale
-#  tailscale_log "Connecting to Tailscale..."
-#  if ! tailscale up; then
-#    tailscale_log "Failed to connect to Tailscale."
-#    return 1
-#  fi
-#
-#  tailscale_log "Successfully connected."
-}
+. ./bin/tailnet
+. ./bin/tailscale_daemon
+. ./bin/tailscale_latest_release
+. ./bin/tailscale_status
 
 function log_tailscale_error() {
   echo "[tailscale] ERROR:" $*

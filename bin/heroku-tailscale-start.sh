@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-. ./bin/tailscale_bash_helpers
+. ./bin/buildpack_helpers/tailscale_bash
 
 set -e
 
