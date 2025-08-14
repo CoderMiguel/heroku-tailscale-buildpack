@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
-. ./bin/tailscale/daemon
-. ./bin/tailscale/latest_release
-. ./bin/tailscale/status
+. ./bin/tailscale_daemon
+. ./bin/tailscale_latest_release
+. ./bin/tailscale_status
 
 
 if [ -z "$TAILSCALE_HOSTNAME" ]; then
