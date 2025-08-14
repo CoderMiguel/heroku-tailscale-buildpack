@@ -3,14 +3,16 @@
 . ./bin/tailscale/daemon
 . ./bin/tailscale/status
 
+
 if [ -z "$TAILSCALE_HOSTNAME" ]; then
   HEROKU_APP_NAME=${HEROKU_APP_NAME:-${APP_NAME:-$(hostname)}}
   # Swap the . and _ in the dyno with a - since tailscale doesn't allow for periods.
-  DASH_DYNO=${DYNO//./-}
-  DASH_DYNO=${DYNO//_/-}
+#  DASH_DYNO=${DYNO//./-}
+#  DASH_DYNO=${DYNO//_/-}
 #  $(echo "$DYNO" | tr '._' '-')
-
-  TAILSCALE_HOSTNAME="heroku-$HEROKU_APP_NAME-${"$DYNO" | tr '._' '-'}"
+#
+  TAILSCALE_HOSTNAME="heroku-$HEROKU_APP_NAME-$(echo "$DYNO" | tr '._' '-')"
+#  echo "Using Tailscale hostname: $TAILSCALE_HOSTNAME"
 fi
 
 function connect_to_tailnet() {
@@ -78,4 +80,4 @@ function tailscale_running() {
   return 1
 }
 
-#"$@"
+"$@"
