@@ -11,10 +11,10 @@ if [ -z "$TAILSCALE_HOSTNAME" ]; then
 #  echo "Using Tailscale hostname: $TAILSCALE_HOSTNAME"
 fi
 
-. ./bin/tailnet
-. ./bin/tailscale_daemon
-. ./bin/tailscale_latest_release
-. ./bin/tailscale_status
+. ./bin/buildpack_helpers/tailnet
+. ./bin/buildpack_helpers/tailscale_daemon
+. ./bin/buildpack_helpers/tailscale_latest_release
+. ./bin/buildpack_helpers/tailscale_status
 
 function log_tailscale_error() {
   echo "[tailscale] ERROR:" $*
