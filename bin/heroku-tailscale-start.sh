@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-. ./bin/buildpack_helpers/tailscale_bash
+. "$(dirname "${BASH_SOURCE[0]}")/buildpack_helpers/tailscale_bash"
 
 set -e
 

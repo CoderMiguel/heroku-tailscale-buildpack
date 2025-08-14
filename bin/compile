@@ -38,7 +38,7 @@ chmod +x "$TAILSCALE_INSTALL_DIR/tailscaled"
 #for file in tailscale_daemon tailscale_latest_release tailscale_status; do
 #  cp "$BUILDPACK_DIR/bin/$file" "$TAILSCALE_INSTALL_DIR/$file"
 #done
-mkdir -p "$TAILSCALE_INSTALL_DIR/bin"
+#mkdir -p "$TAILSCALE_INSTALL_DIR/bin"
 cp -r "$BUILDPACK_DIR/bin/buildpack_helpers" "$TAILSCALE_INSTALL_DIR/bin/buildpack_helpers"
 cp "$BUILDPACK_DIR/bin/heroku-tailscale-start.sh" "$TAILSCALE_INSTALL_DIR/heroku-tailscale-start.sh"
 cp "$BUILDPACK_DIR/bin/heroku-tailscale-test.sh" "$TAILSCALE_INSTALL_DIR/heroku-tailscale-test.sh"
