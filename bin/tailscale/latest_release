@@ -7,7 +7,9 @@ function latest_release_json() {
    echo "$LATEST_RELEASE_JSON"
 }
 
-function latest_version() {
+function latest_tailscale_version() {
   local version=$(jq -r .tag_name <<< "$(latest_release_json)")
   echo "${version#v}" # remove leading 'v'
 }
+
+"$@"
