@@ -11,5 +11,3 @@ function latest_tailscale_version() {
   local version=$(jq -r .tag_name <<< "$(latest_release_json)")
   echo "${version#v}" # remove leading 'v'
 }
-
-"$@"
