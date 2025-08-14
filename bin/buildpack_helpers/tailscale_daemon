@@ -12,9 +12,9 @@ function start_tailscale_daemon() {
     _clean_up # > /dev/null 2>&1
     log_tailscale_info "Starting daemon..."
 
-    (tailscaled -verbose ${TAILSCALED_VERBOSE:--1} \
-                --tun=userspace-networking \
-                --socks5-server=localhost:1055)
+    tailscaled -verbose ${TAILSCALED_VERBOSE:--1} \
+               --tun=userspace-networking \
+               --socks5-server=localhost:1055 &
 
     if tailscale_running; then
       log_tailscale_info "daemon started successfully."
