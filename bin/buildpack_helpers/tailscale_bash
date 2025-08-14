@@ -53,5 +53,3 @@ function tailscale_running() {
 
   return 1
 }
-
-"$@"
