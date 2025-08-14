@@ -16,12 +16,11 @@ function start_tailscale_daemon() {
                 --tun=userspace-networking \
                 --socks5-server=localhost:1055)
 
-#  sleep 2
-
-  if tailscale_running; then
-    log_tailscale_info "daemon started successfully."
-  else
-    log_tailscale_error "Failed to start Tailscale daemon."
-    return 1
+    if tailscale_running; then
+      log_tailscale_info "daemon started successfully."
+    else
+      log_tailscale_error "Failed to start Tailscale daemon."
+      return 1
+    fi
   fi
 }
