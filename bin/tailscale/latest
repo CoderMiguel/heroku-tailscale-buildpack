@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+function latest_release_json() {
+   if [ -z "$LATEST_RELEASE_JSON" ]; then
+     LATEST_RELEASE_JSON=$(curl -s https://api.github.com/repos/tailscale/tailscale/releases/latest)
+   fi
+   echo "$LATEST_RELEASE_JSON"
+}
+
+function latest_version() {
+  local version=$(jq -r .tag_name <<< "$(latest_release_json)")
+  echo "${version#v}" # remove leading 'v'
+}

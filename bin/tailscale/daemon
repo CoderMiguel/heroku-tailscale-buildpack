@@ -1,0 +1,69 @@
+#!/usr/bin/env bash
+
+function _clean_up() {
+  log_tailscale_info "Cleaning up daemon..."
+#  tailscaled -cleanup
+}
+
+function start_tailscale_daemon() {
+  # Ensure tailscaled is not already running
+#  if pgrep -x "tailscaled" > /dev/null; then
+#    tailscale_log "daemon is already running."
+#    return 0
+#  else
+    _clean_up # > /dev/null 2>&1
+    log_tailscale_info "Starting daemon..."
+
+#    (tailscaled -verbose ${TAILSCALED_VERBOSE:--1} \
+#                --tun=userspace-networking \
+#                --socks5-server=localhost:1055)
+#  fi
+
+#  (tailscaled -verbose ${TAILSCALED_VERBOSE:--1} \
+#             --tun=userspace-networking \
+#             --socks5-server=localhost:1055)
+#
+#  # Wait for the daemon to start
+#  sleep 2
+#
+#  # Check if the daemon started successfully
+#  if ! tailscale_running; then
+#    echo "Failed to start Tailscale daemon."
+#    return 1
+#  fi
+
+  log_tailscale_info "daemon started successfully."
+}
+
+#function log() {
+#  echo "[tailscale]: $*"
+#}
+#
+#function tailscale_running() {
+#  timeout=${TAILSCALE_RUNNING_TIMEOUT:-5} # Timeout in seconds
+#  interval=0.5  # Interval between checks
+#
+#  # convert to milliseconds so we can use integer math
+#  timeout_ms=$(awk "BEGIN {print $timeout * 1000}")
+#  interval_ms=$(awk "BEGIN {print $interval * 1000}")
+#
+#  elapsed=0
+#
+#  while [ "$elapsed" -lt "$timeout_ms" ]; do
+#    state=$(tailscale_status_json | jq -r .BackendState)
+#
+#    if [ "$state" = "Running" ]; then
+#      return 0
+#    fi
+#
+#    sleep "$interval"
+#
+#    elapsed=$((elapsed + interval_ms))
+#  done
+#
+#  return 1
+#}
+#
+#function tailscale_status_json() {
+#  echo $(tailscale status -json)
+#}

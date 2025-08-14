@@ -1,0 +1,78 @@
+#!/usr/bin/env bash
+
+. ./bin/tailscale/daemon
+. ./bin/tailscale/status
+
+if [ -z "$TAILSCALE_HOSTNAME" ]; then
+  HEROKU_APP_NAME=${HEROKU_APP_NAME:-${APP_NAME:-$(hostname)}}
+  # Swap the . and _ in the dyno with a - since tailscale doesn't allow for periods.
+  DASH_DYNO=${DYNO//./-}
+  DASH_DYNO=${DYNO//_/-}
+
+  TAILSCALE_HOSTNAME="heroku-$HEROKU_APP_NAME-$DASH_DYNO"
+fi
+
+function connect_to_tailnet() {
+  tailscale up \
+    --authkey="${TAILSCALE_AUTH_KEY}" \
+    --hostname="$TAILSCALE_HOSTNAME" \
+    --advertise-tags=${TAILSCALE_ADVERTISE_TAGS:-} \
+    ${TAILSCALE_ADDITIONAL_ARGS:---accept-routes --timeout=15s}
+
+#  if ! tailscale_running; then
+#    tailscale_log "Tailscale daemon is not running. Starting it now..."
+#    start_tailscale_daemon
+#  fi
+#
+#  # Check if Tailscale is already connected
+#  if tailscale status | grep -q "Logged in"; then
+#    tailscale_log "Tailscale is already connected."
+#    return 0
+#  fi
+#
+#  # Connect to Tailscale
+#  tailscale_log "Connecting to Tailscale..."
+#  if ! tailscale up; then
+#    tailscale_log "Failed to connect to Tailscale."
+#    return 1
+#  fi
+#
+#  tailscale_log "Successfully connected."
+}
+
+function log_tailscale_error() {
+  echo "[tailscale] ERROR:" $*
+}
+
+function log_tailscale_info() {
+  echo "[tailscale]:" $*
+}
+
+function log_tailscale_warn() {
+  echo "[tailscale] WARN:" $*
+}
+
+function tailscale_running() {
+  timeout=${TAILSCALE_RUNNING_TIMEOUT:-5} # Timeout in seconds
+  interval=0.5  # Interval between checks
+
+  # convert to milliseconds so we can use integer math
+  timeout_ms=$(awk "BEGIN {print $timeout * 1000}")
+  interval_ms=$(awk "BEGIN {print $interval * 1000}")
+
+  elapsed=0
+
+  while [ "$elapsed" -lt "$timeout_ms" ]; do
+    state=$(tailscale_status_json | jq -r .BackendState)
+
+    if [ "$state" = "Running" ]; then
+      return 0
+    fi
+
+    sleep "$interval"
+
+    elapsed=$((elapsed + interval_ms))
+  done
+
+  return 1
+}

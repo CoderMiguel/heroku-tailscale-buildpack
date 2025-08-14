@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 # bin/compile <build-dir> <cache-dir> <env-dir>
 
+. ./bin/tailscale_bash_helpers
+
 # configure environment
 set -e            # fail fast
 set -o pipefail   # don't ignore exit codes when piping output
@@ -8,37 +10,18 @@ shopt -s nullglob # allow file pattern to expand to null
 unset GIT_DIR     # clean up leaking environment
 # set -x          # enable debugging
 
-function log() {
-    echo "-----> $*"
-}
-
-function indent() {
-    sed -e 's/^/       /'
-}
-
-function tailscale_latest_release_json() {
-   if [ -z "$LATEST_RELEASE_JSON" ]; then
-      LATEST_RELEASE_JSON=$(curl -s https://api.github.com/repos/tailscale/tailscale/releases/latest)
-    fi
-    echo "$LATEST_RELEASE_JSON"
-}
-
-function tailscale_latest_version() {
-  local version=$(jq -r '.tag_name' <<< "$(tailscale_latest_release_json)")
-  echo "${version#v}" # remove leading 'v'
-}
-
 # setup variables
 BUILD_DIR=$1
 CACHE_DIR=$2
 ENV_DIR=$3
 BUILDPACK_DIR="$(dirname "$(dirname "$0")")"
 
-TAILSCALE_VERSION=${TAILSCALE_VERSION:-$(tailscale_latest_version)}
+TAILSCALE_VERSION=${TAILSCALE_VERSION:-$(tailscale/latest_version)}
 TAILSCALE_BUILD_ARCH=amd64
 TAILSCALE_SOURCE_URL="https://pkgs.tailscale.com/stable/tailscale_${TAILSCALE_VERSION}_${TAILSCALE_BUILD_ARCH}.tgz"
 TAILSCALE_INSTALL_DIR="$BUILD_DIR/vendor/tailscale"
 
+# TODO: consider using the latest version of ProxyChains-ng
 PROXYCHAINS_VERSION=${PROXYCHAINS_VERSION:-4.17}
 PROXYCHAINS_SOURCE_URL="https://github.com/rofl0r/proxychains-ng/archive/refs/tags/v$PROXYCHAINS_VERSION.tar.gz"
 PROXYCHAINS_INSTALL_DIR="$BUILD_DIR/vendor/proxychains-ng"

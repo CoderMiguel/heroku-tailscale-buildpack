@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+function tailscale_status_json() {
+  echo $(tailscale status -json)
+}
