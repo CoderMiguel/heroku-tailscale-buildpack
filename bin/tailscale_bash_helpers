@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 . ./bin/tailscale/daemon
+. ./bin/tailscale/latest_release
 . ./bin/tailscale/status
 
 
