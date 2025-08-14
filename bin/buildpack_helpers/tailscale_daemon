@@ -2,35 +2,26 @@
 
 function _clean_up() {
   log_tailscale_info "Cleaning up daemon..."
-#  tailscaled -cleanup
+  tailscaled -cleanup
 }
 
 function start_tailscale_daemon() {
-  # Ensure tailscaled is not already running
-#  if pgrep -x "tailscaled" > /dev/null; then
-#    tailscale_log "daemon is already running."
-#    return 0
-#  else
+  if pgrep -x "tailscaled" > /dev/null; then
+    tailscale_log "daemon is already running."
+  else
     _clean_up # > /dev/null 2>&1
     log_tailscale_info "Starting daemon..."
 
-#    (tailscaled -verbose ${TAILSCALED_VERBOSE:--1} \
-#                --tun=userspace-networking \
-#                --socks5-server=localhost:1055)
-#  fi
+    (tailscaled -verbose ${TAILSCALED_VERBOSE:--1} \
+                --tun=userspace-networking \
+                --socks5-server=localhost:1055)
 
-#  (tailscaled -verbose ${TAILSCALED_VERBOSE:--1} \
-#             --tun=userspace-networking \
-#             --socks5-server=localhost:1055)
-#
-#  # Wait for the daemon to start
 #  sleep 2
-#
-#  # Check if the daemon started successfully
-#  if ! tailscale_running; then
-#    echo "Failed to start Tailscale daemon."
-#    return 1
-#  fi
 
-  log_tailscale_info "daemon started successfully."
+  if tailscale_running; then
+    log_tailscale_info "daemon started successfully."
+  else
+    log_tailscale_error "Failed to start Tailscale daemon."
+    return 1
+  fi
 }
