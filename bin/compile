@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # bin/compile <build-dir> <cache-dir> <env-dir>
 
-. ./bin/tailscale_bash_helpers
+. ./bin/buildpack_helpers/tailscale_bash
 
 # configure environment
 set -e            # fail fast
