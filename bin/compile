@@ -11,11 +11,17 @@ unset GIT_DIR     # clean up leaking environment
 # set -x          # enable debugging
 
 function log_buildpack_step() {
-  echo "\n-----> $*"
+  echo "-----> $*"
 }
 
 function log_buildpack_progress() {
-    sed -e 's/^/       /'
+  echo "loop version:"
+  for arg in "$@"; do
+    echo "       $arg"
+  done
+
+  echo "inline version:"
+  echo -e "$*" | sed -e 's/^/       /'
 }
 
 # setup variables
