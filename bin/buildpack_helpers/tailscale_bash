@@ -28,28 +28,3 @@ function log_tailscale_info() {
 function log_tailscale_warn() {
   echo "[tailscale] WARN:" $*
 }
-
-function tailscale_running() {
-  timeout=${TAILSCALE_RUNNING_TIMEOUT:-5} # Timeout in seconds
-  interval=0.5  # Interval between checks
-
-  # convert to milliseconds so we can use integer math
-  timeout_ms=$(awk "BEGIN {print $timeout * 1000}")
-  interval_ms=$(awk "BEGIN {print $interval * 1000}")
-
-  elapsed=0
-
-  while [ "$elapsed" -lt "$timeout_ms" ]; do
-    state=$(tailscale_status_json | jq -r .BackendState)
-
-    if [ "$state" = "Running" ]; then
-      return 0
-    fi
-
-    sleep "$interval"
-
-    elapsed=$((elapsed + interval_ms))
-  done
-
-  return 1
-}

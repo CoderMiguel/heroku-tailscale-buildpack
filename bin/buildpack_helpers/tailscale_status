@@ -1,5 +1,21 @@
 #!/usr/bin/env bash
 
+function tailscale_backend_state() {
+  echo "$(tailscale_status_json | jq -r .BackendState)"
+}
+
+function tailscale_backend_state_is() {
+  [ $(tailscale_backend_state) = "$1" ]
+}
+
+function tailscale_backend_state_needs_login() {
+  tailscale_backend_state_is "NeedsLogin"
+}
+
+function tailscale_backend_state_running() {
+  tailscale_backend_state_is "Running"
+}
+
 function tailscale_status_json() {
   echo $(tailscale status -json)
 }

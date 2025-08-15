@@ -24,7 +24,7 @@ else
   #  --advertise-tags=${TAILSCALE_ADVERTISE_TAGS:-} \
   #  ${TAILSCALE_ADDITIONAL_ARGS:---accept-routes --timeout=15s}
 
-  start_tailscale_daemon #> /dev/null 2>&1 &
+  start_tailscale_daemon > /dev/null 2>&1 &
   connect_to_tailnet
 
   if tailscale_running; then

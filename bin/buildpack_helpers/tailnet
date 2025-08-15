@@ -27,3 +27,26 @@ function connect_to_tailnet() {
 #
 #  tailscale_log "Successfully connected."
 }
+
+function tailnet_is_running() {
+  timeout=${TAILSCALE_RUNNING_TIMEOUT:-5} # Timeout in seconds
+  interval=0.5  # Interval between checks
+
+  # convert to milliseconds so we can use integer math
+  timeout_ms=$(awk "BEGIN {print $timeout * 1000}")
+  interval_ms=$(awk "BEGIN {print $interval * 1000}")
+
+  elapsed=0
+
+  while [ "$elapsed" -lt "$timeout_ms" ]; do
+    if tailscale_backend_state_running; then
+      return 0
+    fi
+    echo "."
+    sleep "$interval"
+
+    elapsed=$((elapsed + interval_ms))
+  done
+
+  return 1
+}
