@@ -15,12 +15,10 @@ function log_buildpack_step() {
 }
 
 function log_buildpack_progress() {
-  echo "loop version:"
-  for arg in "$@"; do
-    echo "       $arg"
-  done
-
-  echo "inline version:"
+  # TODO: parking a loop version for future reference
+  #  for arg in "$@"; do
+  #    echo "       $arg"
+  #  done
   echo -e "$*" | sed -e 's/^/       /'
 }
 
@@ -29,6 +27,8 @@ BUILD_DIR=$1
 CACHE_DIR=$2
 ENV_DIR=$3
 BUILDPACK_DIR="$(dirname "$(dirname "$0")")"
+
+STOP_BUILD_ON_ERROR=${STOP_BUILD_ON_ERROR:-false}
 
 TAILSCALE_VERSION=${TAILSCALE_VERSION:-$(latest_tailscale_version)}
 TAILSCALE_BUILD_ARCH=amd64
@@ -101,5 +101,8 @@ echo "/app/vendor/tailscale/heroku-tailscale-start.sh" >> $BUILD_DIR/.profile.d/
 #  log_buildpack_step "Tailscale $TAILSCALE_VERSION installed successfully!"
 #else
   log_buildpack_step "Failed to install Tailscale $TAILSCALE_VERSION"
-  exit 1
+
+  if $STOP_BUILD_ON_ERROR; then
+    exit 1
+  fi
 #fi
