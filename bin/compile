@@ -15,11 +15,9 @@ function log_buildpack_step() {
 }
 
 function log_buildpack_progress() {
-  # TODO: parking a loop version for future reference
-#    for arg in "$@"; do
-#      echo $arg | sed -e 's/^/       /'
-#    done
-  printf '%s\n' "$@" | sed 's/^/       /'
+  for arg in "$@"; do
+    echo -e $arg | sed 's/^/       /'
+  done
 }
 
 # setup variables
@@ -37,7 +35,7 @@ TAILSCALE_BUILD_ARCH=${TAILSCALE_BUILD_ARCH:-$(detect_tailscale_build_arch)}
 TAILSCALE_SOURCE_URL="https://pkgs.tailscale.com/stable/tailscale_${TAILSCALE_VERSION}_${TAILSCALE_BUILD_ARCH}.tgz"
 TAILSCALE_INSTALL_DIR="$BUILD_DIR/vendor/tailscale"
 
-if [[ "$TAILSCALE_VERSION" -eq "$latest_tailscale_version" ]]; then
+if [[ "$TAILSCALE_VERSION" = "$latest_tailscale_version" ]]; then
   log_buildpack_step "Installing Tailscale $TAILSCALE_VERSION ($TAILSCALE_BUILD_ARCH)"
 else
   log_buildpack_progress "You are installing an older version of Tailscale: $TAILSCALE_VERSION ($TAILSCALE_BUILD_ARCH).\nThe latest version is $latest_tailscale_version."
