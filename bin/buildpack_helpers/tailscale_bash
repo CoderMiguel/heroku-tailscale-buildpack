@@ -1,14 +1,11 @@
 #!/usr/bin/env bash
 
+DYNO_TYPE=${DYNO%%.*}
+HEROKU_APP_NAME=${HEROKU_APP_NAME:-${APP_NAME:-$(hostname)}}
+
 if [ -z "$TAILSCALE_HOSTNAME" ]; then
-  HEROKU_APP_NAME=${HEROKU_APP_NAME:-${APP_NAME:-$(hostname)}}
   # Swap the . and _ in the dyno with a - since tailscale doesn't allow for periods.
-#  DASH_DYNO=${DYNO//./-}
-#  DASH_DYNO=${DYNO//_/-}
-#  $(echo "$DYNO" | tr '._' '-')
-#
   TAILSCALE_HOSTNAME="heroku-$HEROKU_APP_NAME-$(echo "$DYNO" | tr '._' '-')"
-#  echo "Using Tailscale hostname: $TAILSCALE_HOSTNAME"
 fi
 
 script_dir="$(dirname "${BASH_SOURCE[0]}")"
@@ -16,6 +13,10 @@ script_dir="$(dirname "${BASH_SOURCE[0]}")"
 . "$script_dir/tailscale_daemon"
 . "$script_dir/tailscale_latest_release"
 . "$script_dir/tailscale_status"
+
+function dyno_type_is() {
+  [ "$DYNO_TYPE" = "$1" ]
+}
 
 function log_tailscale_error() {
   echo "[tailscale] ERROR:" $*

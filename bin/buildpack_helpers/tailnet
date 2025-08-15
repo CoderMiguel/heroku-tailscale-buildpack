@@ -7,11 +7,20 @@ function connect_to_tailnet() {
     --advertise-tags=${TAILSCALE_ADVERTISE_TAGS:-} \
     ${TAILSCALE_ADDITIONAL_ARGS:---accept-routes --timeout=15s} > /dev/null 2>&1
 
-  if tailnet_is_running; then
+  if ! tailnet_is_running; then
     log_tailscale_info "Connected to tailnet as hostname=$TAILSCALE_HOSTNAME; SOCKS5 proxy available at localhost:1055"
   else
     log_tailscale_warn "did not reach 'Running' state within timeout"
     exit 1
+  fi
+}
+
+function expose_heroku_port_to_tailnet() {
+  if dyno_type_is "run"; then
+    log_tailscale_info "skipping 'tailscale serve --bg $PORT' on run dyno"
+  else
+    # expose the Heroku dyno port to the tailnet
+    tailscale serve --bg $PORT
   fi
 }
 
