@@ -35,36 +35,22 @@ TAILSCALE_BUILD_ARCH=${TAILSCALE_BUILD_ARCH:-$(detect_tailscale_build_arch)}
 TAILSCALE_SOURCE_URL="https://pkgs.tailscale.com/stable/tailscale_${TAILSCALE_VERSION}_${TAILSCALE_BUILD_ARCH}.tgz"
 TAILSCALE_INSTALL_DIR="$BUILD_DIR/vendor/tailscale"
 
-TAILSCALE_VERSION="1.86.0"
+TAILSCALE_VERSION=${TAILSCALE_VERSION:-$latest_tailscale_version}
+
 if [[ "$TAILSCALE_VERSION" = "$latest_tailscale_version" ]]; then
   log_buildpack_step "Installing Tailscale $TAILSCALE_VERSION ($TAILSCALE_BUILD_ARCH)"
 else
-  echo -e "$(cat <<NEWER_TAILSCALE_VERSION
+  message=$(cat <<NEWER_TAILSCALE_VERSION
       \e[1;33mWARNING: You are installing an older version of Tailscale $TAILSCALE_VERSION ($TAILSCALE_BUILD_ARCH)\e[0m.
 
       There is a more recent Tailscale version available for you to use.
 
       It is recommend to use the latest version.
-      Please consider updating to the latest version: \e[1;30m$latest_tailscale_version ($TAILSCALE_BUILD_ARCH)\e[0m
+      Please consider updating to the latest version: \e[1;32m$latest_tailscale_version ($TAILSCALE_BUILD_ARCH)\e[0m
 NEWER_TAILSCALE_VERSION
-)"
+  )
+  log_buildpack_step -e "$message"
 fi
-TAILSCALE_VERSION=${TAILSCALE_VERSION:-$latest_tailscale_version}
-
-# TODO: a new version of Tailscale is available check.
-#remote:
-#remote:
-#remote:        There is a more recent Ruby version available for you to use:
-#remote:
-#remote:        3.2.9
-#remote:
-#remote:        The latest version will include security and bug fixes. We always recommend
-#remote:        running the latest version of your minor release.
-#remote:
-#remote:        Please upgrade your Ruby version.
-#remote:
-#remote:        For all available Ruby versions see:
-#remote:          https://devcenter.heroku.com/articles/ruby-support#supported-runtimes
 
 install_successful=true
 
