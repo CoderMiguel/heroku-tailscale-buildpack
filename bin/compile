@@ -37,9 +37,9 @@ TAILSCALE_INSTALL_DIR="$BUILD_DIR/vendor/tailscale"
 
 TAILSCALE_VERSION=${TAILSCALE_VERSION:-$latest_tailscale_version}
 
-if [[ "$TAILSCALE_VERSION" = "$latest_tailscale_version" ]]; then
-  log_buildpack_step "Installing Tailscale $TAILSCALE_VERSION ($TAILSCALE_BUILD_ARCH)"
-else
+#if [[ "$TAILSCALE_VERSION" = "$latest_tailscale_version" ]]; then
+#  log_buildpack_step "Installing Tailscale $TAILSCALE_VERSION ($TAILSCALE_BUILD_ARCH)"
+#else
   message=$(cat <<NEWER_TAILSCALE_VERSION
       \e[1;33mWARNING: You are installing an older version of Tailscale $TAILSCALE_VERSION ($TAILSCALE_BUILD_ARCH)\e[0m.
 
@@ -50,8 +50,8 @@ else
 NEWER_TAILSCALE_VERSION
   )
   log_buildpack_step -e "$message"
-fi
-
+#fi
+exit 1
 install_successful=true
 
 mkdir -p $TAILSCALE_INSTALL_DIR
