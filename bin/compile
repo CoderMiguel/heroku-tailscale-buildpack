@@ -48,7 +48,7 @@ log_buildpack_step "Installing Tailscale $TAILSCALE_VERSION ($TAILSCALE_BUILD_AR
       Please consider updating to the latest version: \e[1;32m$latest_tailscale_version ($TAILSCALE_BUILD_ARCH)\e[0m
 NEWER_TAILSCALE_VERSION
   )
-  log_buildpack_progress $message
+  log_buildpack_progress "$message"
 #fi
 exit 1
 install_successful=true
