@@ -18,6 +18,14 @@ function dyno_type_is() {
   [ "$DYNO_TYPE" = "$1" ]
 }
 
+#function log_buildpack_info() {
+#  echo "-----> $*"
+#}
+#
+#function log_indent() {
+#    sed -e 's/^/       /'
+#}
+
 function log_tailscale_error() {
   echo "[tailscale] ERROR:" $*
 }
