@@ -15,23 +15,18 @@ function log_buildpack_step() {
 }
 
 function log_buildpack_progress() {
-#  _indent () {
-#    echo -e "$@" | sed 's/^/       /'
-#  }
-#
-#  if [[ $# -gt 0 ]]; then
-#    printf '%s\n' "$@" | while IFS= read -r line; do
-#      _indent "$line"
-#    done
-#  else
-#    while IFS= read -r line; do
-#      _indent "$line"
-#    done
-#  fi
+  _indent () {
+    echo -e "$@" | sed 's/^/       /'
+  }
+
   if [[ $# -gt 0 ]]; then
-    printf '%s\n' "$@" | sed 's/^/       /'
+    printf '%s\n' "$@" | while IFS= read -r line; do
+      _indent "$line"
+    done
   else
-    sed 's/^/       /'
+    while IFS= read -r line; do
+      _indent "$line"
+    done
   fi
 }
 
