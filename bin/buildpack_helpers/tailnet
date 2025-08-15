@@ -25,7 +25,7 @@ function expose_heroku_port_to_tailnet() {
 }
 
 function tailnet_is_running() {
-  timeout=${TAILSCALE_RUNNING_TIMEOUT:-5} # Timeout in seconds
+  timeout=${TAILSCALE_RUNNING_TIMEOUT:-10} # Timeout in seconds
   interval=0.5  # Interval between checks
 
   # convert to milliseconds so we can use integer math
