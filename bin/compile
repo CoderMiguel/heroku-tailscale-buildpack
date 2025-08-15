@@ -37,9 +37,9 @@ TAILSCALE_INSTALL_DIR="$BUILD_DIR/vendor/tailscale"
 
 TAILSCALE_VERSION=${TAILSCALE_VERSION:-$latest_tailscale_version}
 log_buildpack_progress <<INSTALLING_TAILSCALE
-                                                                \e[232m \e[0;90m ● ● ● \e[0m
-Installing Tailscale $TAILSCALE_VERSION ($TAILSCALE_BUILD_ARCH) \e[232m \e[0;37m ● ● ● \e[0m
-                                                                \e[232m \e[0;90m ● \e[0;37m● \e[0;90m● \e[0m
+                   \e[232m \e[0;90m ● ● ● \e[0m
+Installing \e[232m \e[0;37m ● ● ● \e[0m Tailscale $TAILSCALE_VERSION ($TAILSCALE_BUILD_ARCH)
+                   \e[232m \e[0;90m ● \e[0;37m● \e[0;90m● \e[0m
 INSTALLING_TAILSCALE
 
 if [[ ! "$TAILSCALE_VERSION" = "$latest_tailscale_version" ]]; then
