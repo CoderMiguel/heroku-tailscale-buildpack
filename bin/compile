@@ -15,8 +15,8 @@ function log_buildpack_step() {
 }
 
 function log_buildpack_progress() {
-  for arg in "$@"; do
-    echo -e $arg | sed 's/^/       /'
+  while IFS= read -r line; do
+    echo -e "$line" | sed 's/^/       /'
   done
 }
 
