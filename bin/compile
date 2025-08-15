@@ -38,17 +38,18 @@ TAILSCALE_INSTALL_DIR="$BUILD_DIR/vendor/tailscale"
 TAILSCALE_VERSION=${TAILSCALE_VERSION:-$latest_tailscale_version}
 
 log_buildpack_step "Installing Tailscale $TAILSCALE_VERSION ($TAILSCALE_BUILD_ARCH)"
-#if [[ ! "$TAILSCALE_VERSION" = "$latest_tailscale_version" ]]; then
+if [[ ! "$TAILSCALE_VERSION" = "$latest_tailscale_version" ]]; then
   log_buildpack_progress <<NEWER_TAILSCALE_VERSION
-      \e[1;33mWARNING: You are installing an older version of Tailscale $TAILSCALE_VERSION ($TAILSCALE_BUILD_ARCH)\e[0m.
+\e[1;33mWARNING: You are installing an older version of Tailscale $TAILSCALE_VERSION ($TAILSCALE_BUILD_ARCH)\e[0m.
 
-      There is a more recent Tailscale version available for you to use.
+There is a more recent Tailscale version available for you to use.
 
-      It is recommend to use the latest version.
-      Please consider updating to the latest version: \e[1;32m$latest_tailscale_version ($TAILSCALE_BUILD_ARCH)\e[0m
+It is recommend to use the latest version.
+Please consider updating to the latest version: \e[1;32m$latest_tailscale_version ($TAILSCALE_BUILD_ARCH)\e[0m
+
 NEWER_TAILSCALE_VERSION
-#fi
-exit 1
+fi
+
 install_successful=true
 
 mkdir -p $TAILSCALE_INSTALL_DIR
