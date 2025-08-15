@@ -28,7 +28,7 @@ CACHE_DIR=$2
 ENV_DIR=$3
 BUILDPACK_DIR="$(dirname "$(dirname "$0")")"
 
-START_TAILSCALE_ON_BOOT=${START_TAILSCALE_ON_BOOT:-false}
+START_TAILSCALE_ON_BOOT=${START_TAILSCALE_ON_BOOT:-true}
 STOP_BUILD_ON_ERROR=${STOP_BUILD_ON_ERROR:-true}
 
 TAILSCALE_VERSION=${TAILSCALE_VERSION:-$(latest_tailscale_version)}
@@ -102,12 +102,12 @@ fi
 #cp "$BUILDPACK_DIR/bin/tailscale_proxy" $BUILD_DIR/bin/
 #chmod +x $BUILD_DIR/bin/tailscale_proxy
 
-#if $?; then
-#  log_buildpack_step "Tailscale $TAILSCALE_VERSION installed successfully!"
-#else
+if $?; then
+  log_buildpack_step "Tailscale $TAILSCALE_VERSION installed successfully!"
+else
   log_buildpack_step "Failed to install Tailscale $TAILSCALE_VERSION"
 
   if $STOP_BUILD_ON_ERROR; then
     exit 1
   fi
-#fi
+fi
