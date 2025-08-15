@@ -9,20 +9,20 @@ function start_tailscale_daemon() {
   if pgrep -x "tailscaled" > /dev/null; then
     log_tailscale_info "daemon is already running."
   else
-    _clean_up # > /dev/null 2>&1
+    _clean_up > /dev/null 2>&1
     log_tailscale_info "Starting daemon..."
 
     tailscaled -verbose ${TAILSCALED_VERBOSE:--1} \
                --tun=userspace-networking \
                --socks5-server=localhost:1055 &
 
-    log_tailscale_info "tailscale_backend_state: $(tailscale_backend_state)\n
-    tailscale_backend_state_needs_login: $(tailscale_backend_state_needs_login)"
-#    if tailscale_backend_state_needs_login; then
-#      log_tailscale_info "daemon started successfully."
-#    else
-#      log_tailscale_error "Failed to start Tailscale daemon."
-#      return 1
-#    fi
+#    log_tailscale_info "tailscale_backend_state: $(tailscale_backend_state)\n
+#    tailscale_backend_state_needs_login: $(tailscale_backend_state_needs_login)"
+    if tailscale_backend_state_needs_login; then
+      log_tailscale_info "daemon started successfully."
+    else
+      log_tailscale_error "Failed to start Tailscale daemon."
+      return 1
+    fi
   fi
 }
