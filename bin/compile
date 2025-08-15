@@ -49,7 +49,7 @@ TAILSCALE_VERSION=${TAILSCALE_VERSION:-$latest_tailscale_version}
       Please consider updating to the latest version: \e[1;32m$latest_tailscale_version ($TAILSCALE_BUILD_ARCH)\e[0m
 NEWER_TAILSCALE_VERSION
   )
-  log_buildpack_step -e "$message"
+  log_buildpack_step "$message"
 #fi
 exit 1
 install_successful=true
