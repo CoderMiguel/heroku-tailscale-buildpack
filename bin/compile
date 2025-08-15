@@ -30,18 +30,19 @@ BUILDPACK_DIR="$(dirname "$(dirname "$0")")"
 
 START_TAILSCALE_ON_BOOT=${START_TAILSCALE_ON_BOOT:-true}
 STOP_BUILD_ON_ERROR=${STOP_BUILD_ON_ERROR:-true}
-
-TAILSCALE_VERSION=${TAILSCALE_VERSION:-$(latest_tailscale_version)}
+latest_tailscale_version=$(latest_tailscale_version)
+TAILSCALE_VERSION=${TAILSCALE_VERSION:-$latest_tailscale_version}
 
 TAILSCALE_BUILD_ARCH=${TAILSCALE_BUILD_ARCH:-$(detect_tailscale_build_arch)}
-echo "arch: $(uname -m), TAILSCALE_BUILD_ARCH: $TAILSCALE_BUILD_ARCH"
-
 TAILSCALE_SOURCE_URL="https://pkgs.tailscale.com/stable/tailscale_${TAILSCALE_VERSION}_${TAILSCALE_BUILD_ARCH}.tgz"
 TAILSCALE_INSTALL_DIR="$BUILD_DIR/vendor/tailscale"
 
-log_buildpack_step "Installing Tailscale $TAILSCALE_VERSION"
-install_successful=true
-
+if [[ "$TAILSCALE_VERSION" -eq "$latest_tailscale_version" ]]; then
+  log_buildpack_step "Installing Tailscale $TAILSCALE_VERSION ($TAILSCALE_BUILD_ARCH)"
+else
+  log_buildpack_progress "You are installing an older version of Tailscale: $TAILSCALE_VERSION ($TAILSCALE_BUILD_ARCH).\nThe latest version is $latest_tailscale_version."
+  log_buildpack_progress "Please consider updating to the latest version."
+fi
 # TODO: a new version of Tailscale is available check.
 #remote: ###### WARNING:
 #remote:
@@ -56,6 +57,9 @@ install_successful=true
 #remote:
 #remote:        For all available Ruby versions see:
 #remote:          https://devcenter.heroku.com/articles/ruby-support#supported-runtimes
+
+install_successful=true
+
 mkdir -p $TAILSCALE_INSTALL_DIR
 mkdir -p "$TAILSCALE_INSTALL_DIR/bin/buildpack_helpers"
 
