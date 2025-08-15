@@ -35,16 +35,15 @@ TAILSCALE_BUILD_ARCH=${TAILSCALE_BUILD_ARCH:-$(detect_tailscale_build_arch)}
 TAILSCALE_SOURCE_URL="https://pkgs.tailscale.com/stable/tailscale_${TAILSCALE_VERSION}_${TAILSCALE_BUILD_ARCH}.tgz"
 TAILSCALE_INSTALL_DIR="$BUILD_DIR/vendor/tailscale"
 
-log_buildpack_progress "$(cat <<INSTALLING_TAILSCALE
+log_buildpack_progress <<INSTALLING_TAILSCALE
            \e[232m \e[0;90m ● ● ● \e[0m
 Installing \e[232m \e[0;37m ● ● ● \e[0m Tailscale $TAILSCALE_VERSION ($TAILSCALE_BUILD_ARCH)
            \e[232m \e[0;90m ● \e[0;37m● \e[0;90m● \e[0m
 INSTALLING_TAILSCALE
-)"
 #log_buildpack_progress "Installing Tailscale $TAILSCALE_VERSION ($TAILSCALE_BUILD_ARCH)"
 
 if [[ ! "$TAILSCALE_VERSION" = "$latest_tailscale_version" ]]; then
-  log_buildpack_progress "$(cat <<NEWER_TAILSCALE_VERSION_WARNING
+  log_buildpack_progress<<NEWER_TAILSCALE_VERSION_WARNING
 \e[1;33mWARNING: You are installing an older version of Tailscale $TAILSCALE_VERSION ($TAILSCALE_BUILD_ARCH)\e[0m.
 
 There is a more recent Tailscale version available for you to use.
@@ -53,7 +52,6 @@ It is recommend to use the latest version.
 Please consider updating to the latest version: \e[1;32m$latest_tailscale_version ($TAILSCALE_BUILD_ARCH)\e[0m
 
 NEWER_TAILSCALE_VERSION_WARNING
-)"
 fi
 
 install_successful=true
