@@ -27,12 +27,12 @@ else
   start_tailscale_daemon > /dev/null 2>&1 &
   connect_to_tailnet
 
-  if tailscale_running; then
-    tailscale_log "Connected to tailnet as hostname=$TAILSCALE_HOSTNAME; SOCKS5 proxy available at localhost:1055"
+  if tailnet_is_running; then
+    log_tailscale_info "Connected to tailnet as hostname=$TAILSCALE_HOSTNAME; SOCKS5 proxy available at localhost:1055"
     tailscale serve --bg $PORT # expose the Heroku dyno port to the tailnet
 #    exit 0
   else
-    tailscale_log "Warning - Backend did not reach 'Running' state within timeout"
+    log_tailscale_info "Warning - Backend did not reach 'Running' state within timeout"
     exit 1
   fi
 fi
