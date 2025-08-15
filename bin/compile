@@ -39,7 +39,7 @@ TAILSCALE_VERSION="1.86.0"
 if [[ "$TAILSCALE_VERSION" = "$latest_tailscale_version" ]]; then
   log_buildpack_step "Installing Tailscale $TAILSCALE_VERSION ($TAILSCALE_BUILD_ARCH)"
 else
-  log_buildpack_progress -e $(cat <<-NEWER_TAILSCALE_VERSION
+  log_buildpack_progress -e $(cat <<NEWER_TAILSCALE_VERSION
     \e[1;32mWARNING: There is a more recent Tailscale version available for you to use:.\e[0m
 
     You are installing Tailscale $TAILSCALE_VERSION ($TAILSCALE_BUILD_ARCH).
