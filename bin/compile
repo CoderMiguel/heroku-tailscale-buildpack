@@ -11,7 +11,7 @@ unset GIT_DIR     # clean up leaking environment
 # set -x          # enable debugging
 
 function log_buildpack_step() {
-  echo "-----> $*"
+  echo "\n-----> $*"
 }
 
 function log_buildpack_progress() {
