@@ -11,3 +11,11 @@ function latest_tailscale_version() {
   local version=$(jq -r .tag_name <<< "$(latest_release_json)")
   echo "${version#v}" # remove leading 'v'
 }
+
+function detect_tailscale_build_arch() {
+  case $(uname -m) in
+    x86_64) echo "amd64" ;;
+    aarch64) echo "arm64" ;;
+    *) echo "unknown" ;;
+  esac
+}
