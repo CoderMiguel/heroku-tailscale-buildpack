@@ -38,7 +38,7 @@ TAILSCALE_INSTALL_DIR="$BUILD_DIR/vendor/tailscale"
 #if [[ "$TAILSCALE_VERSION" = "$latest_tailscale_version" ]]; then
 #  log_buildpack_step "Installing Tailscale $TAILSCALE_VERSION ($TAILSCALE_BUILD_ARCH)"
 #else
-  log_buildpack_progress "\e[1;33m###### WARNING: You are installing an older version of Tailscale: $TAILSCALE_VERSION ($TAILSCALE_BUILD_ARCH).\nThe latest version is $latest_tailscale_version."
+  log_buildpack_progress "\e[1;33m###### WARNING:\e[0m You are installing an older version of Tailscale: $TAILSCALE_VERSION ($TAILSCALE_BUILD_ARCH).\nThe latest version is $latest_tailscale_version."
   log_buildpack_progress "Please consider updating to the latest version."
 #fi
 
