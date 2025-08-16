@@ -2,7 +2,7 @@
 
 set -e
 
-. ./logging
+#. ./logging
 
 #wait_for_tailscale_running() {
 #  timeout=${TAILSCALE_RUNNING_TIMEOUT:-5} # Timeout in seconds

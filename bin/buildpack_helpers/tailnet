@@ -17,8 +17,9 @@ function connect_to_tailnet() {
 
 function expose_heroku_port_to_tailnet() {
   if dyno_type_is "run"; then
-    log_tailscale_info "skipping 'tailscale serve --bg $PORT' on run dyno"
+    log_tailscale_info "skipping 'tailscale serve --bg $PORT' on $DYNO_TYPE dyno"
   else
+    log_tailscale_info "running 'tailscale serve --bg $PORT' on $DYNO"
     # expose the Heroku dyno port to the tailnet
     tailscale serve --bg $PORT
   fi
