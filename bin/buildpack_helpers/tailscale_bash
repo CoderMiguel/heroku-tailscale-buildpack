@@ -19,7 +19,7 @@ function dyno_type_is() {
 }
 
 function log_tailscale_error() {
-  echo "\e[1;31m[tailscale] ERROR: $@\e[0m"
+  echo -e "\e[1;31m[tailscale] ERROR: $@\e[0m"
 }
 
 function log_tailscale_info() {
@@ -27,5 +27,5 @@ function log_tailscale_info() {
 }
 
 function log_tailscale_warn() {
-  echo "\e[1;33m[tailscale] WARNING: $@\e[0m"
+  echo -e "\e[1;33m[tailscale] WARNING: $@\e[0m"
 }
