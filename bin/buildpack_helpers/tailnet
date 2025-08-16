@@ -10,7 +10,7 @@ function connect_to_tailnet() {
   if ! tailnet_is_running; then
     log_tailscale_info "Connected to tailnet as hostname=$TAILSCALE_HOSTNAME; SOCKS5 proxy available at localhost:1055"
   else
-    log_tailscale_warn "did not reach 'Running' state within timeout"
+    log_tailscale_warn "did not reach 'Running' state within timeout. Current state: $(tailscale_backend_state)"
     exit 1
   fi
 }
@@ -39,7 +39,8 @@ function tailnet_is_running() {
     if tailscale_backend_state_running; then
       return 0
     fi
-    echo "."
+    echo "$elapsed - $timeout_ms"
+#    echo "."
     sleep "$interval"
 
     elapsed=$((elapsed + interval_ms))
