@@ -50,6 +50,7 @@ log_buildpack_progress <<INSTALLING_TAILSCALE
 Installing \e[232m \e[0;37m ● ● ● \e[0m Tailscale $TAILSCALE_VERSION ($TAILSCALE_BUILD_ARCH)
            \e[232m \e[0;90m ● \e[0;37m● \e[0;90m● \e[0m
 INSTALLING_TAILSCALE
+# TODO: less verbose version
 #log_buildpack_progress "Installing Tailscale $TAILSCALE_VERSION ($TAILSCALE_BUILD_ARCH)"
 
 if [[ ! "$TAILSCALE_VERSION" = "$latest_tailscale_version" ]]; then
