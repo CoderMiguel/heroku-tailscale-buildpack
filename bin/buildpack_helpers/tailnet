@@ -7,7 +7,7 @@ function connect_to_tailnet() {
     --advertise-tags=${TAILSCALE_ADVERTISE_TAGS:-} \
     ${TAILSCALE_ADDITIONAL_ARGS:---accept-routes --timeout=15s} > /dev/null 2>&1
 
-  if ! tailnet_is_running; then
+  if tailnet_is_running; then
     log_tailscale_info "Connected to tailnet as hostname=$TAILSCALE_HOSTNAME; SOCKS5 proxy available at localhost:1055"
   else
     log_tailscale_warn "did not reach 'Running' state within timeout. Current state: $(tailscale_backend_state)"
